@@ -6,8 +6,8 @@ from langchain.vectorstores import Pinecone
 import pinecone
 
 pinecone.init(
-    api_key="e1f6a543-85e7-4fe6-bfb3-c2f9db496263",
-    environment="us-west1-gcp-free",
+    api_key=os.environ["PINECONE_API_KEY"],
+    environment=os.environ["PINECONE_ENVIRONMENT_REGION"],
 )
 
 
@@ -29,9 +29,7 @@ def ingest_docs() -> None:
         doc.metadata.update({"source": new_url})
 
     print(f"Going to insert {len(documents)} to Pinecone")
-    embeddings = OpenAIEmbeddings(
-        openai_api_key="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"
-    )
+    embeddings = OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"])
     Pinecone.from_documents(documents[3969:], embeddings, index_name="langchain-doc")
     print("****** Added to Pinecone vectorstore vectors")
 

@@ -9,8 +9,8 @@ import pinecone
 
 
 pinecone.init(
-    api_key="e1f6a543-85e7-4fe6-bfb3-c2f9db496263",
-    environment="us-west1-gcp-free",
+    api_key=os.environ["PINECONE_API_KEY"],
+    environment=os.environ["PINECONE_ENVIRONMENT_REGION"],
 )
 
 INDEX_NAME = "langchain-doc"
@@ -18,14 +18,14 @@ INDEX_NAME = "langchain-doc"
 
 def run_llm(query: str) -> Any:
     embeddings = OpenAIEmbeddings(
-        openai_api_key="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"
+        openai_api_key=os.environ["OPENAI_API_KEY"],
     )
     docsearch = Pinecone.from_existing_index(
         embedding=embeddings,
         index_name=INDEX_NAME,
     )
     chat = ChatOpenAI(
-        openai_api_key="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",
+        openai_api_key=os.environ["OPENAI_API_KEY"],
         verbose=True,
         temperature=0,
     )
